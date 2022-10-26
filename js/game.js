@@ -10,7 +10,6 @@ function startGame() {
     const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
     myGamePiece.push(new component(radius, color));
   }
-
   myGameArea.start();
 }
 
@@ -71,6 +70,7 @@ function component(radius, color) {
   const sign = Math.floor(Math.random() * 2) < 1 ? -1 : 1;
   this.speedX = sign * (Math.floor(Math.random() * 3) + 1);
   this.speedY = sign * (Math.floor(Math.random() * 3) + 1);
+
   this.x = Math.floor(Math.random() * (screen.width - this.radius));
   if (this.x <= this.radius) {
     this.x = this.radius + 1;
@@ -85,13 +85,14 @@ function handleClick(e) {
   myGamePiece = myGamePiece.filter((el) => {
     if (
       !(
-        e.x > el.x - el.radius &&
-        e.x < el.x + el.radius &&
-        e.y > el.y - el.radius &&
-        e.y < el.y + el.radius
+        e.x - 9 > el.x - el.radius &&
+        e.x - 9 < el.x + el.radius &&
+        e.y - 9 > el.y - el.radius &&
+        e.y - 9 < el.y + el.radius
       )
-    )
+    ) {
       return el;
+    }
   });
   if (myGamePiece.length === 0) {
     myGameArea.stop();

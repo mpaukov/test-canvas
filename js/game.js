@@ -1,10 +1,12 @@
 const amount = 20;
+const ballMinSize = 25;
+const screen = { width: 640, height: 480 };
 
 let myGamePiece = [];
 
 function startGame() {
   for (let i = 0; i < amount; i += 1) {
-    const radius = Math.floor(Math.random() * 5) + 25;
+    const radius = Math.floor(Math.random() * 10) + ballMinSize;
     const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
     myGamePiece.push(new component(radius, color));
   }
@@ -16,8 +18,8 @@ let myGameArea = {
   canvas: document.createElement("canvas"),
 
   start: function () {
-    this.canvas.width = 480;
-    this.canvas.height = 270;
+    this.canvas.width = screen.width;
+    this.canvas.height = screen.height;
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.interval = setInterval(updateGameArea, 20);
@@ -37,13 +39,13 @@ let myGameArea = {
       myGamePiece[i].x += myGamePiece[i].speedX;
       myGamePiece[i].y += myGamePiece[i].speedY;
       if (
-        myGamePiece[i].x >= 480 - myGamePiece[i].radius ||
+        myGamePiece[i].x >= screen.width - myGamePiece[i].radius ||
         myGamePiece[i].x <= myGamePiece[i].radius
       ) {
         myGamePiece[i].speedX = -myGamePiece[i].speedX;
       }
       if (
-        myGamePiece[i].y >= 270 - myGamePiece[i].radius ||
+        myGamePiece[i].y >= screen.height - myGamePiece[i].radius ||
         myGamePiece[i].y <= myGamePiece[i].radius
       ) {
         myGamePiece[i].speedY = -myGamePiece[i].speedY;
@@ -69,11 +71,11 @@ function component(radius, color) {
   const sign = Math.floor(Math.random() * 2) < 1 ? -1 : 1;
   this.speedX = sign * (Math.floor(Math.random() * 3) + 1);
   this.speedY = sign * (Math.floor(Math.random() * 3) + 1);
-  this.x = Math.floor(Math.random() * (480 - this.radius));
+  this.x = Math.floor(Math.random() * (screen.width - this.radius));
   if (this.x <= this.radius) {
     this.x = this.radius + 1;
   }
-  this.y = Math.floor(Math.random() * (270 - this.radius));
+  this.y = Math.floor(Math.random() * (screen.height - this.radius));
   if (this.y <= this.radius) {
     this.y = this.radius + 1;
   }
